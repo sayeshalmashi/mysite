@@ -13,3 +13,10 @@ class post(models.Model):
   published_date=models.DateField(null=True)
   creat_date=models.DateField(auto_now_add=True)
   update_date=models.DateField(auto_now=True)
+  
+  class Meta:
+    ordering=['-creat_date']
+    #verbose_name='پست'
+  
+  def __str__(self):
+    return "{}-{}".format(self.title,self.id)
