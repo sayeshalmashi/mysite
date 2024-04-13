@@ -3941,6 +3941,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .single-post-area .navigation-area .nav-right .thumb {
   margin-left: 20px;
   background: #000;
+  max-width: 200px;
 }
 
 .single-post-area .navigation-area .nav-right .thumb img {
