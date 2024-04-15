@@ -3,9 +3,13 @@ from django.shortcuts import render,get_object_or_404
 from blog.models import Post
 from django.utils import timezone
 
-def blog_view(request):
+def blog_view(request,**kwargs):
   current_time=timezone.now()
   posts=Post.objects.filter(status=1,published_date__lte=current_time).order_by('-id')
+  if kwargs.get('cat_name')!=None:
+    posts=Post.objects.filter(status=1,category__name=kwargs['cat_name'])
+  if kwargs.get('author_username')!=None:
+    posts=Post.objects.filter(status=1,author__username=kwargs['author_username'])
   context={'posts':posts}
   return render(request,'blog/blog-home.html',context)
 
@@ -20,11 +24,7 @@ def blog_single(request,pid):
   context={'post':post,'prev_post':prev_post,'next_post':next_post}
   return render(request,'blog/blog-single.html',context)
 
-# def test_views(request):
-#   current_time= timezone.now()
-#   filtered_post= Post.objects.filter(published_date__lte=current_time)
-#   for post in filtered_post:
-#     post.count_views+=1
-#     post.save()
-#   context={'published':filtered_post}
-#   return render(request,'test.html',context)
+def blog_category(request,cat_name):
+  posts=Post.objects.filter(status=1,category__name=cat_name)
+  context={'posts':posts}
+  return render(request,'blog/blog-home.html',context)
