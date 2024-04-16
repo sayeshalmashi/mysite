@@ -21,12 +21,12 @@
               <ul>
                 {% for tag in post.category.all %}
                   <li>
-                    <a href="#">{{tag.category.name}}</a>
+                    <a href="{% url 'blog:category' cat_name=tag.name %}">{{tag.name}}</a>
                   </li>	
                 {%endfor%}							
               </ul>
             </div>
-            <a href="#"><h4 class="title">{{post.title}}</h4></a>
+            <a href="{%url 'blog:single' pid=post.id %}"><h4 class="title">{{post.title}}</h4></a>
             <p>
               {{post.content|truncatewords:10}}
             </p>
