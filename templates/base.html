@@ -81,10 +81,34 @@
         </div>
       </div>
     </header>
+    
 
     {% block content%}
 
     {% endblock %}
+    {% if messages %}
+							{% for message in messages %}
+								<div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+							{% endfor %}
+						{% endif %}
+					
+						{% if form.errors %}
+							<div class="alert alert-error">
+								<h4>Please fix the following errors</h4>
+								<ul>
+									{% for field in form %}
+										{% if field.errors %}
+											{% for error in field.errors %}
+												<li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+											{% endfor %}
+										{% endif %}
+									{% endfor %}
+								</ul>
+								{% if form.non_field_errors %}
+									{{ form.non_field_errors }}
+								{% endif %}
+							</div>
+						{% endif %}	
     <footer class="footer-area section-gap">
       <div class="container">
 
@@ -169,7 +193,69 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       </div>
     </footer>
     <!-- End footer Area -->	
+
+
+
+
+
+
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">موفقیت</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="success-message"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+          </div>
+        </div>
+      </div>
+    </div>
     
+    
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">خطا</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id="error-message"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        const successModal = $('#successModal');
+        const errorMessage = successModal.find('#success-message');
+    
+    
+        const errorModal = $('#errorModal');
+        const errorMesage = errorModal.find('#error-message');
+      })    
+
+    </script>
+
+  
+    
+
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js'%}"></script>
     <script src="{% static 'js/popper.min.js'%}"></script>
     <script src="{% static 'js/vendor/bootstrap.min.js'%}"></script>			

@@ -9,16 +9,21 @@ def index_view(request):
 def about_view(request):
   return render(request,'website/about.html')
 
+
+
 def contact_view(request):
-  if request.method =='POST':
-    form=ContactForm(request.POST)
+  if request.method == 'POST':
+    form = ContactForm(request.POST)
     if form.is_valid():
       form.save()
-      messages.add_message(request,messages.SUCCESS,'your ticket submited successfully')
+      success_message = "you'r ticket submited successfully"
+      messages.add_message(request, messages.SUCCESS, success_message)
     else:
-      messages.add_message(request,messages.ERROR,'your ticket didnt submited')
-  form=ContactForm()
-  return render(request,'website/contact.html',{'form':form})   
+      error_message = "yout ricket didnt submited"
+      messages.add_message(request, messages.ERROR, error_message)
+  form = ContactForm()
+  return render(request, 'website/contact.html', {'form': form})
+
 
 def NewsLetter_view(request):
   if request.method =='POST':
