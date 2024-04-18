@@ -1,12 +1,17 @@
-from django.forms import ModelForm
+from django import forms
 from website.models import Contact,NewsLetter
 
-class ContactForm(ModelForm):
+class ContactForm(forms.ModelForm):
+  subject=forms.CharField(required=False)
   class Meta:
     model=Contact
     fields='__all__'
+  def clean(self):
+    clean_data=super().clean()
+    clean_data['name']='UNKNOWN'
+    return clean_data
     
-class NewsLetterForm(ModelForm):
+class NewsLetterForm(forms.ModelForm):
   class Meta:
     model=NewsLetter
     fields='__all__'
