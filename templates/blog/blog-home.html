@@ -108,9 +108,9 @@
 									</div>
 									<a class="posts-title" href="{%url 'blog:single' pid=post.id %}"><h3>{{post.title}}</h3></a>
 									<p class="excert">
-										{{post.content|truncatewords:10}}
+										{{post.content|truncatewords:10|safe}}
 									</p>
-									<a href="#" class="primary-btn">View More</a>
+									<a href="{%url 'blog:single' pid=post.id %}" class="primary-btn">View More</a>
 								</div>
 						  </div>			
 							{% endfor %}										
@@ -152,8 +152,7 @@
 								{% latestposts %}
 								{%include 'blog/blog-ads.html'%}
 								{% postcategory %}
-								{%include 'blog/blog-newsletter.html'%}
-								{%include 'blog/blog-tag.html'%}						
+								{%include 'blog/blog-newsletter.html'%}						
 							</div>
 						</div>
 					</div>

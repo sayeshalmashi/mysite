@@ -51,7 +51,7 @@
 								<div class="col-lg-9 col-md-9">
 									<h3 class="mt-20 mb-20">{{post.title}}</h3>
 									<p class="excert">
-										{{post.content}}
+										{{post.content|safe}}
 									</p>
 								</div>
 								
@@ -213,7 +213,7 @@
 								{%include 'blog/blog-writer.html'%}
 								{% latestposts %}
 								{%include 'blog/blog-ads.html'%}
-								{%include 'blog/blog-post-category.html'%}
+								{% postcategory %}
 								{%include 'blog/blog-newsletter.html'%}
 								{%include 'blog/blog-tag.html'%}								
 							</div>
