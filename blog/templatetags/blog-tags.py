@@ -20,7 +20,8 @@ def latestposts(arg=3):
 
 @register.inclusion_tag('blog/blog-post-category.html')
 def postcategory():
-  posts=Post.objects.filter(status=1)
+  current_time=timezone.now()
+  posts=Post.objects.filter(status=1,published_date__lte=current_time)
   categories=Category.objects.all()
   cat_dict={}
   for name in categories:
