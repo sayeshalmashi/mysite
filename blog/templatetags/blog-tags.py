@@ -1,12 +1,15 @@
 from django import template
-from blog.models import Post
-from blog.models import Category
+from blog.models import Post,Category,Comment
 from django.utils import timezone
 register =template.Library()
 @register.simple_tag(name='post')
 def function():
   posts=Post.objects.filter(status=1).count()
   return posts
+
+@register.simple_tag(name='comments_count')
+def function(pid):
+  return Comment.objects.filter(post=pid,approved=True).count()
 
 @register.filter
 def snippet(value,arg=20):

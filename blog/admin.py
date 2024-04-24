@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Post, Category
+from blog.models import Post, Category,Comment
 from django_summernote.admin import SummernoteModelAdmin
 # # Register your models here.
 
@@ -13,5 +13,15 @@ class PostAdmin(SummernoteModelAdmin):
   # in taghirat va filter ha faghat zaman namyesg anjam mishavad va dar database in filter ha anjam nmishe age mikhy in filtera dar database anjam beshe dar class meta dakhel model ina ro benevis.
   summernote_fields = ('content',)
 
+
+class CommentAdmin(admin.ModelAdmin):
+  date_hierarchy='created_date'
+  empty_value_display='-empty-'
+  list_display=('name','post','approved','created_date')
+  list_filter=('post','approved',) #topple akharesh ,
+  ordering=['-created_date']
+  search_fields=['name','post']
+
+admin.site.register(Comment,CommentAdmin)
 admin.site.register(Category)
 admin.site.register(Post,PostAdmin)
