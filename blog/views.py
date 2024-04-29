@@ -1,9 +1,12 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404 , redirect
 from blog.models import Post,Comment
 from django.utils import timezone
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from blog.forms import CommentForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def blog_view(request,**kwargs):
   current_time=timezone.now()
@@ -26,6 +29,7 @@ def blog_view(request,**kwargs):
   context={'posts':posts}
   return render(request,'blog/blog-home.html',context)
 
+# @login_required
 def blog_single(request,pid):
   if request.method == 'POST':
     form = CommentForm(request.POST)
@@ -43,11 +47,15 @@ def blog_single(request,pid):
   next_post=Post.objects.filter(pk__gt=post.id,status=1,published_date__lte=current_time).order_by('pk').first()
   post.count_views+=1
   post.save()
-  comments=Comment.objects.filter(post=post.id,approved=True)
-  form=CommentForm()
-  
-  context={'post':post,'prev_post':prev_post,'next_post':next_post,'comments':comments,'form':form}
-  return render(request,'blog/blog-single.html',context)
+  if request.user.is_authenticated:
+    post.login_require=True
+    comments=Comment.objects.filter(post=post.id,approved=True)
+    form=CommentForm() 
+    context={'post':post,'prev_post':prev_post,'next_post':next_post,'comments':comments,'form':form}
+    return render(request,'blog/blog-single.html',context)
+  else:
+    next_url=reverse('blog:single',kwargs={'pid':post.id})
+    return redirect(reverse('accounts:login') + '?next=' + next_url)
 
 def blog_category(request,cat_name):
   posts=Post.objects.filter(status=1,category__name=cat_name)

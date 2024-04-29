@@ -6,7 +6,7 @@ from django_summernote.admin import SummernoteModelAdmin
 class PostAdmin(SummernoteModelAdmin):
   date_hierarchy='creat_date'
   empty_value_display='-empty-'
-  list_display=('title','author','count_views','status','published_date','creat_date')
+  list_display=('title','author','count_views','status','published_date','creat_date','login_require')
   list_filter=('status','author',) #topple akharesh ,
   ordering=['-creat_date']
   search_fields=['title','content']
