@@ -31,7 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
     path('blog/', include('blog.urls')),
-    
+    #  path("accounts/", include("django.contrib.auth.urls")),
     path('accounts/',include('accounts.urls')),
     
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},

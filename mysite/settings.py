@@ -198,3 +198,5 @@ INTERNAL_IPS = [
    '127.0.0.1',
 ]
 X_FRAME_OPTIONS='SAMEORIGIN'  #baraye load frame ha az jahaye dg mesl frame summernote  
+
+LOGIN_REDIRECT_URL='/'
