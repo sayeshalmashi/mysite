@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from website.forms import ContactForm,NewsLetterForm
 from django.contrib import messages
+
 
 def index_view(request):
   return render(request,'website/index.html')
@@ -35,3 +36,4 @@ def NewsLetter_view(request):
       messages.add_message(request,messages.ERROR,'your ticket didnt submited')
   form=NewsLetterForm()
   return render(request,'website/contact.html',{'form':form}) 
+

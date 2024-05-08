@@ -29,7 +29,7 @@ def blog_view(request,**kwargs):
   context={'posts':posts}
   return render(request,'blog/blog-home.html',context)
 
-# @login_required
+# @login_required()
 def blog_single(request,pid):
   if request.method == 'POST':
     form = CommentForm(request.POST)
@@ -55,7 +55,7 @@ def blog_single(request,pid):
     return render(request,'blog/blog-single.html',context)
   else:
     next_url=reverse('blog:single',kwargs={'pid':post.id})
-    return redirect(reverse('accounts:login') + '?next=' + next_url)
+    return redirect(reverse('login') + '?next=' + next_url)
 
 def blog_category(request,cat_name):
   posts=Post.objects.filter(status=1,category__name=cat_name)

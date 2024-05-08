@@ -97,6 +97,15 @@ MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
 }
 
+#EMAIL SETTING
+
+
+
+
+
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -200,3 +209,12 @@ INTERNAL_IPS = [
 X_FRAME_OPTIONS='SAMEORIGIN'  #baraye load frame ha az jahaye dg mesl frame summernote  
 
 LOGIN_REDIRECT_URL='/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'sayeshalmashi50@gmail.com' #your email-id
+EMAIL_HOST_PASSWORD = '1721381sAye' #your password
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
