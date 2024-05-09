@@ -3,3 +3,6 @@ asgiref
 pytz
 sqlparse
 pillow
+multi_captcha_admin
+captcha
+django_summernote
