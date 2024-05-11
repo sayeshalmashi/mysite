@@ -36,7 +36,7 @@ def login_view(request):
                 return redirect('/')
             else:
                  messages.add_message(request,messages.ERROR,'The desired person was not found')
-        return render(request, "registrations/login.html")
+        return render(request, "registration/login.html")
     else:
           return redirect('/')
 
@@ -82,7 +82,7 @@ def signup_view(request):
     form= RegistrationForm()
   
   context={'form': form}
-  return render(request,'registrations/sign_up.html',context)
+  return render(request,'registration/sign_up.html',context)
 
 # def signup_view(request):
 #   if not request.user.is_authenticated:
@@ -106,17 +106,19 @@ def signup_view(request):
 #     success_url = reverse_lazy('account:user-setting')
 #     form_class = ChangePasswordForm
 
+
 class PasswordReset(PasswordResetView):
-    template_name="registrations/password_reset_form.html"
+    template_name="registration/password_reset_form.html"
     success_url=reverse_lazy("accounts:password_reset_done")
 
 class PasswordResetDone(PasswordResetDoneView):
-    template_name="registrations/password_reset_done.html"
+    template_name="registration/password_reset_done.html"
     success_url=reverse_lazy("accounts:password_reset_confirm")
 
 class PasswordResetConfirm(PasswordResetConfirmView):
-    template_name="registrations/password_reset_confirm.html"
+    template_name="registration/password_reset_confirm.html"
     success_url=reverse_lazy("accounts:password_reset_complete")
 
 class PasswordResetComplete(PasswordResetCompleteView):
-    template_name="account/password_reset_complete.html"
+    template_name="registration/password_reset_complete.html"
+    success_url=reverse_lazy("accounts:password_reset_complete")
