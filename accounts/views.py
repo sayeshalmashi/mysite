@@ -75,8 +75,7 @@ def signup_view(request):
   if request.method=='POST':
     form=RegistrationForm(request.POST)
     if form.is_valid():
-      user= form.save()
-      login(request,user)
+      form.save()
       return redirect('/')
   else:
     form= RegistrationForm()
@@ -90,6 +89,8 @@ def signup_view(request):
 #       form=RegistrationForm(request.POST)
 #       if form.is_valid():
 #         form.save()
+#         user= form.save()
+#         login(request,user)
 #         return redirect('/')
 #     # form=UserCreationForm()
 #     form=RegistrationForm()
@@ -102,7 +103,7 @@ def signup_view(request):
 # Customized password change and reset views
 
 # class ChangePasswordView(PasswordChangeView):
-#     template_name = 'accounts/change_password.html'
+#     template_name = 'registration/change_password.html'
 #     success_url = reverse_lazy('account:user-setting')
 #     form_class = ChangePasswordForm
 
@@ -121,4 +122,4 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 
 class PasswordResetComplete(PasswordResetCompleteView):
     template_name="registration/password_reset_complete.html"
-    success_url=reverse_lazy("accounts:password_reset_complete")
+    
