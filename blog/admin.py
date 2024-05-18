@@ -10,7 +10,7 @@ class PostAdmin(SummernoteModelAdmin):
   list_filter=('status','author',) #topple akharesh ,
   ordering=['-creat_date']
   search_fields=['title','content']
-  # in taghirat va filter ha faghat zaman namyesg anjam mishavad va dar database in filter ha anjam nmishe age mikhy in filtera dar database anjam beshe dar class meta dakhel model ina ro benevis.
+  # in taghirat va filter ha faghat zaman namyesh anjam mishavad va dar database in filter ha anjam nmishe age mikhy in filtera dar database anjam beshe dar class meta dakhel model ina ro benevis.
   summernote_fields = ('content',)
 
 
