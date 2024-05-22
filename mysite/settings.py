@@ -11,11 +11,20 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = config('SECRET_KEY',default='test')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG',cast=bool,default=True)
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +51,9 @@ INSTALLED_APPS = [
     'blog',
     'accounts',
 ]
+
+# site framework
+SITE_ID = 2
 
 # robots
 ROBOTS_USE_HOST=True
@@ -85,14 +97,6 @@ MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
 }
 
-#EMAIL SETTING
-
-
-
-
-
-
-
 
 
 MIDDLEWARE = [
@@ -125,6 +129,30 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+if DEBUG:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+else:
+    DATABASES = {
+    'default': {
+        'ENGINE': config('DB_ENGINE',default='django.db.backends.postgresql'),
+        'NAME': config('DB_NAME',default='postgres'),
+        'USER':config('DB_USER',default='postgres'),
+        'PASSWORD':config('DB_PASS',default='postgres'),
+        'HOST':config('DB_HOST',default='127.0.0.1'),
+        'PORT':config('DB_PORT',cast=int,default=5432),
+    }
+}
+    
+
 
 
 
@@ -164,10 +192,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+STATIC_ROOT=BASE_DIR/'static'
+MEDIA_ROOT=BASE_DIR/'media'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "statics",
+]
+MEDIAFILES_DIRS = [
+    BASE_DIR / "media",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -179,14 +215,39 @@ INTERNAL_IPS = [
 ]
 
 
+
+
+
 LOGIN_REDIRECT_URL='/'
+#EMAIL SETTING
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sayeshalmashi50@gmail.com' #your email-id
-EMAIL_HOST_PASSWORD = 'jlxf tucj fpeb ueja' #your password
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = config('EMAIL_BACKEND',default='django.core.mail.backends.smtp.EmailBackend')
+    EMAIL_HOST = config('EMAIL_HOST',default='smtp.gmail.com')
+    EMAIL_PORT = config('EMAIL_PORT',default=587)
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER',default='sayeshalmashi50@gmail.com') #your email-id
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD',default='jlxf tucj fpeb ueja') #your password
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool,default=True)
+    EMAIL_USE_SSL = config('EMAIL_USE_SSL',cast=bool,default=False)
 
+#security config for production
+if config("USE_SSL_SETTINGS",cast=bool,default=False):
+    # HTTPS SETTING
+    SESSION_COOKIE_SECURE=True
+    CSRF_COOKIE_SECURE=True
+    SECURE_SSL_REDIRECT=True
+
+    # HSTS SETTINGS
+    SECURE_HSTS_SECONDS= 31536000 #1year
+    SECURE_HSTS_PRELOAD= True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS= True
+
+    #more security settings
+    SECURE_CONTENT_TYPE_NOSNIFF= True
+    SECURE_BROWSER_XSS_FILTER=True
+    X_FRAME_OPTIONS='SAMEORIGIN'  #baraye load frame ha az jahaye dg mesl frame summernote  
+    SECURE_REFERRER_POLICY='strict-origin'
+    USE_X_FORWARDED_HOST=True
+    SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')

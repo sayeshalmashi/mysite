@@ -30,7 +30,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    re_path(r'^.*$', coming_soon),
+    # re_path(r'^.*$', coming_soon),
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
     path('blog/', include('blog.urls')),
@@ -48,3 +48,8 @@ urlpatterns = [
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler400 = "mysite.error_views.error_400"
+handler403 = "mysite.error_views.error_403"
+handler404 = "mysite.error_views.error_404"
+handler500 = "mysite.error_views.error_500"

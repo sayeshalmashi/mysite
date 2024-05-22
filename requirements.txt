@@ -11,3 +11,5 @@ django-robots
 django-debug-toolbar
 django-extensions
 django-taggit
+python-decouple
+psycopg2-binary
