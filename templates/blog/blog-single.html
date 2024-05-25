@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {%load static%}
+{%load compress%}
 {%load humanize%}
 {% load blog-tags %}
 {% block content %}
@@ -144,7 +145,7 @@
 								{%include 'blog/blog-ads.html'%}
 								{% postcategory %}
 								{%include 'blog/blog-newsletter.html'%}
-								{%include 'blog/blog-tag.html'%}								
+								<!-- {%include 'blog/blog-tag.html'%}								 -->
 							</div>
 						</div>
 					</div>

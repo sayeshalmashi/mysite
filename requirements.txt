@@ -6,10 +6,11 @@ pillow
 django-multi_captcha_admin
 captcha
 django-simple-captcha
-django_summernote
+# django_summernote
 django-robots
 django-debug-toolbar
 django-extensions
-django-taggit
+# django-taggit>=1.4.0,<1.6.0
 python-decouple
 psycopg2-binary
+django-compressor

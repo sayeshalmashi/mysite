@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'captcha',
-    'django_summernote',
+    # 'django_summernote',
     'robots',
     'debug_toolbar',
-    'taggit',
-    
+    # 'taggit',
+    'compressor',
     'django_extensions',
     'website.apps.WebsiteConfig',
     'blog',
@@ -90,6 +90,25 @@ SUMMERNOTE_CONFIG = {
         ],
     }
 }
+
+STATICFILES_FINDERS = [
+    
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+]
+
 
 # captcha admin setting
 
@@ -199,7 +218,7 @@ STATIC_ROOT=BASE_DIR/'static'
 MEDIA_ROOT=BASE_DIR/'media'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "statics",
+    BASE_DIR / "static",
 ]
 MEDIAFILES_DIRS = [
     BASE_DIR / "media",
